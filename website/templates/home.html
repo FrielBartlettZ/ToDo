@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock%}
+{% block content %}
+<h1 align="center">To-Do</h1>
+<ul class="list-group list-group-flush" id="notes">
+  {% for note in user.notes %}
+  {% if note.isDone == False %}
+  <li class="list-group-item">
+    <button type="button" class="btn btn-outline-success" onClick="markDone({{ note.id }})">
+      <span aria-hidden="true">To Do!</span>
+    </button>
+    {{ note.data }} (by {{ note.do_by}} )
+    <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+  {% endif %}
+  {% endfor %}
+  {% for note in user.notes %}
+  {% if note.isDone == True %}
+  <li class="list-group-item">
+    <button type="button" class="btn btn-outline-dark" onClick="markDone({{ note.id }})">
+      <span aria-hidden="true">Done!</span>
+    </button>
+    {{ note.data }} (by {{ note.do_by}} )
+    <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+  {% endif %}
+  {% endfor %}
+</ul>
+<form method="POST">
+    <textarea name="ToDo" id="ToDo" class="form-control">
+    </textarea>
+    <br>
+    <label for="do_by">Do by:</label>
+    <input type="datetime-local" id="do_by" name="do_by">
+    <br>
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Add To-Do</button>
+    </div>
+</form>{% endblock%}
